@@ -1,0 +1,21 @@
+/* Tailwind CSS v4 — single import replaces tailwind.config.js */
+@import "tailwindcss";
+
+/* ── School ERP Custom Theme ─────────────────────────── */
+@theme {
+    --color-primary:   #1e40af;   /* deep blue — main brand */
+    --color-primary-hover: #1d3a9a;
+    --color-accent:    #0ea5e9;   /* sky blue — highlights */
+    --color-success:   #16a34a;
+    --color-warning:   #d97706;
+    --color-danger:    #dc2626;
+    --color-sidebar:   #1e293b;   /* dark sidebar */
+    --color-sidebar-hover: #334155;
+
+    --font-sans: 'Outfit', ui-sans-serif, system-ui;
+    --font-mono: 'JetBrains Mono', ui-monospace;
+}
+
+/* ── Flatpickr, Tom Select imports ───────────────────── */
+@import "flatpickr/dist/flatpickr.min.css";
+@import "tom-select/dist/css/tom-select.css";
