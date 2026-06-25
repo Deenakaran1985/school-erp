@@ -10,7 +10,7 @@
       <h1 class="text-2xl font-bold text-slate-800">Classes &amp; Sections</h1>
       <p class="text-sm text-slate-400 mt-0.5">{{ $year->label }} &middot; {{ $classes->count() }} classes configured</p>
     </div>
-    @can('class.create')
+    @can('class.manage')
     <a href="{{ route('admin.classes.create') }}" class="btn-primary flex items-center gap-2">
       <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
@@ -31,7 +31,7 @@
     </div>
     <h3 class="text-slate-700 font-semibold mb-1">No classes yet</h3>
     <p class="text-slate-400 text-sm mb-5">Create your first class to get started with sections and subjects.</p>
-    @can('class.create')
+    @can('class.manage')
     <a href="{{ route('admin.classes.create') }}" class="btn-primary inline-flex items-center gap-2">
       <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="flex items-center gap-1.5">
-          @can('class.edit')
+          @can('class.manage')
           <a href="{{ route('admin.classes.edit', $class) }}"
             class="p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-600 transition-colors" title="Edit">
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -67,7 +67,7 @@
             </svg>
           </a>
           @endcan
-          @can('class.delete')
+          @can('class.manage')
           <form method="POST" action="{{ route('admin.classes.destroy', $class) }}"
             onsubmit="return confirm('Delete class {{ $class->name }}? This cannot be undone.')">
             @csrf @method('DELETE')
@@ -85,7 +85,7 @@
       <div>
         <div class="flex items-center justify-between mb-2">
           <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Sections</p>
-          @can('class.edit')
+          @can('class.manage')
           <button type="button" @click="addingSection = !addingSection"
             class="text-[10px] font-semibold text-indigo-500 hover:text-indigo-700 uppercase tracking-wide">
             <span x-text="addingSection ? '✕ Cancel' : '+ Add'"></span>
@@ -97,7 +97,7 @@
           @forelse($class->sections as $sec)
           <div class="flex items-center gap-1 badge badge-blue">
             <span>{{ $sec->name }}</span>
-            @can('class.edit')
+            @can('class.manage')
             <form method="POST" action="{{ route('admin.classes.sections.remove', [$class, $sec]) }}" class="inline">
               @csrf @method('DELETE')
               <button type="submit" class="hover:text-red-400 ml-0.5 leading-none transition-colors"
@@ -110,7 +110,7 @@
           @endforelse
         </div>
 
-        @can('class.edit')
+        @can('class.manage')
         <div x-show="addingSection" x-transition class="mt-2">
           <form method="POST" action="{{ route('admin.classes.sections.add', $class) }}" class="flex gap-2">
             @csrf
@@ -128,7 +128,7 @@
           <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
             Subjects ({{ $class->subjects->count() }})
           </p>
-          @can('class.edit')
+          @can('class.manage')
           <button type="button" @click="addingSubject = !addingSubject"
             class="text-[10px] font-semibold text-emerald-500 hover:text-emerald-700 uppercase tracking-wide">
             <span x-text="addingSubject ? '✕ Cancel' : '+ Add'"></span>
@@ -148,7 +148,7 @@
           @endif
         </ul>
 
-        @can('class.edit')
+        @can('class.manage')
         <div x-show="addingSubject" x-transition class="mt-3 space-y-2">
           <form method="POST" action="{{ route('admin.classes.subjects.add', $class) }}" class="space-y-2">
             @csrf

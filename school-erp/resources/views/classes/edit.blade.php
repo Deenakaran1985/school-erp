@@ -98,7 +98,7 @@
         </svg>
         <span class="font-semibold">{{ $sec->name }}</span>
         <span class="opacity-50 text-xs">&middot; {{ $sec->students()->count() }} students</span>
-        @can('class.edit')
+        @can('class.manage')
         <form method="POST" action="{{ route('admin.classes.sections.remove', [$class, $sec]) }}" class="inline ml-1">
           @csrf @method('DELETE')
           <button type="submit" onclick="return confirm('Remove section {{ $sec->name }}?')"
@@ -115,7 +115,7 @@
       @endforelse
     </div>
 
-    @can('class.edit')
+    @can('class.manage')
     <form method="POST" action="{{ route('admin.classes.sections.add', $class) }}"
       class="flex gap-3 items-end pt-1 border-t border-slate-100">
       @csrf
@@ -169,7 +169,7 @@
     </div>
     @endif
 
-    @can('class.edit')
+    @can('class.manage')
     <form method="POST" action="{{ route('admin.classes.subjects.add', $class) }}"
       class="grid grid-cols-12 gap-2 items-end pt-1 border-t border-slate-100">
       @csrf

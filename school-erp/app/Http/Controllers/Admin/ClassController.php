@@ -25,14 +25,14 @@ class ClassController extends Controller
 
     public function create()
     {
-        $this->authorize('class.create');
+        $this->authorize('class.manage');
         $year = AcademicYear::current();
         return view('classes.create', compact('year'));
     }
 
     public function store(Request $request)
     {
-        $this->authorize('class.create');
+        $this->authorize('class.manage');
 
         $validated = $request->validate([
             'name'         => 'required|string|max:50',
@@ -90,14 +90,14 @@ class ClassController extends Controller
 
     public function edit(SchoolClass $class)
     {
-        $this->authorize('class.edit');
+        $this->authorize('class.manage');
         $class->load(['sections', 'subjects']);
         return view('classes.edit', compact('class'));
     }
 
     public function update(Request $request, SchoolClass $class)
     {
-        $this->authorize('class.edit');
+        $this->authorize('class.manage');
 
         $validated = $request->validate([
             'name'         => 'required|string|max:50',
@@ -115,7 +115,7 @@ class ClassController extends Controller
 
     public function destroy(SchoolClass $class)
     {
-        $this->authorize('class.delete');
+        $this->authorize('class.manage');
 
         if ($class->students()->exists()) {
             return back()->with('error', 'Cannot delete class with enrolled students.');
@@ -132,7 +132,7 @@ class ClassController extends Controller
     // POST admin/classes/{class}/sections
     public function addSection(Request $request, SchoolClass $class)
     {
-        $this->authorize('class.edit');
+        $this->authorize('class.manage');
 
         $request->validate(['name' => 'required|string|max:10']);
 
@@ -148,7 +148,7 @@ class ClassController extends Controller
     // DELETE admin/classes/{class}/sections/{section}
     public function removeSection(SchoolClass $class, Section $section)
     {
-        $this->authorize('class.edit');
+        $this->authorize('class.manage');
 
         if ($section->students()->exists()) {
             return back()->with('error', 'Cannot remove section with enrolled students.');
@@ -161,7 +161,7 @@ class ClassController extends Controller
     // POST admin/classes/{class}/subjects
     public function addSubject(Request $request, SchoolClass $class)
     {
-        $this->authorize('class.edit');
+        $this->authorize('class.manage');
 
         $request->validate([
             'name'       => 'required|string|max:100',
