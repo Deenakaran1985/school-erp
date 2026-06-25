@@ -14,7 +14,7 @@ class SettingsController extends Controller
 {
     public function index()
     {
-        $this->authorize('settings.view');
+        $this->authorize('settings.manage');
 
         $academicYears = AcademicYear::orderByDesc('start_date')->get();
         $currentYear   = AcademicYear::current();
@@ -39,7 +39,7 @@ class SettingsController extends Controller
     // POST admin/settings/school-info
     public function updateSchoolInfo(Request $request)
     {
-        $this->authorize('settings.edit');
+        $this->authorize('settings.manage');
 
         $validated = $request->validate([
             'school_name'    => 'required|string|max:150',
@@ -96,7 +96,7 @@ class SettingsController extends Controller
     // POST admin/settings/academic-year
     public function storeAcademicYear(Request $request)
     {
-        $this->authorize('settings.edit');
+        $this->authorize('settings.manage');
 
         $validated = $request->validate([
             'label'      => 'required|string|max:20',
@@ -112,7 +112,7 @@ class SettingsController extends Controller
     // PUT admin/settings/academic-year/{year}/set-current
     public function setCurrentYear(AcademicYear $year)
     {
-        $this->authorize('settings.edit');
+        $this->authorize('settings.manage');
 
         AcademicYear::where('is_current', true)->update(['is_current' => false]);
         $year->update(['is_current' => true]);
@@ -123,7 +123,7 @@ class SettingsController extends Controller
     // POST admin/settings/departments
     public function storeDepartment(Request $request)
     {
-        $this->authorize('settings.edit');
+        $this->authorize('settings.manage');
 
         $request->validate([
             'name' => 'required|string|max:100',
@@ -142,7 +142,7 @@ class SettingsController extends Controller
     // POST admin/settings/grade-config
     public function storeGradeConfig(Request $request)
     {
-        $this->authorize('settings.edit');
+        $this->authorize('settings.manage');
 
         $request->validate([
             'grade'       => 'required|string|max:5',
@@ -159,7 +159,7 @@ class SettingsController extends Controller
     // POST admin/settings/exam-types
     public function storeExamType(Request $request)
     {
-        $this->authorize('settings.edit');
+        $this->authorize('settings.manage');
 
         $request->validate([
             'name'        => 'required|string|max:50',
